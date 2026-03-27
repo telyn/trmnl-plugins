@@ -1,14 +1,16 @@
 {% template task_item %}
-{% assign taskclass = "title title--small" %}
-{% if small %}{% assign taskclass = "label label--small" %}{% endif %}
-  <div class="item">
+{% assign taskclass = "title" %}
+{% if small %}{% assign taskclass = "label" %}{% endif %}
+  <div class="item {% unless task.completed %}item--emphasis-2{% endunless %}">
     <div class="meta">
-      <span class="index">{% if task.completed %}x{% endif %}</span>
+      <span class="index value--large text--black text-stroke--large">{% if task.completed %}&#x2714;{% else %}&nbsp;{% endif %}</span>
     </div>
     <div class="content">
-      <span class="{{ taskclass }} clamp--none">{{ task.text | markdown_to_html | strip_html }}</span>
+      <span class="{{ taskclass }} {{ taskclass }}--small {% if task.completed %}text--gray-75 1bit:text--gray-50{% endif %} clamp--none">
+        {{ task.text | markdown_to_html | strip_html }}
+      </span>
       {% unless skip_label %}
-      <span class="label label--small clamp--none">
+      <span class="label label--small clamp--none label--gray">
         {% if streak %}Streak: {{ task.streak | number_with_delimiter: "," }}{% endif %}.
         {% if task.checklist.size > 0 %}Checklist items: {{ task.checklist | size }} {% endif %}
       </span>
